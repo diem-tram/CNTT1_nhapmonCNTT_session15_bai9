@@ -1,0 +1,39 @@
+Bài 9: Tự Thiết Kế Hệ Thống Lưu Trữ và Phân Quyền Cho Dự Án CampusPay
+Phần 1.1
+Đầu vào:
+- Nhân sự gồm 4 nhóm (Ban Kỹ thuật : người, Ban Thiết kế :2 người, Ban Kinh doanh :2 người, Nhà đầu tư ngoại bộ : 1 người).
+- Tài liệu: Mã nguồn/API keys, Tài sản UI/đồ họa, Business Plan, Slide Pitch, Tài liệu chung.
+- Yêu cầu kỹ thuật: Phân quyền tối thiểu, không dùng "Anyone with link" cho tài liệu nhạy cảm, lịch sử phiên bản tối thiểu 30 ngày, tự hủy quyền sau 14 ngày.
+ Đầu ra:
+- Cấu trúc thư mục Google Drive 2 cấp tối ưu và dễ quản lý.
+ - Bảng phân quyền chi tiết cho mọi vai trò ứng với từng loại tài liệu.
+ - Phương án xử lý kỹ thuật cho các tình huống rủi ro (bẫy dữ liệu).
+Phần1.2
+Cấu trúc chia theo hai thư mục gốc cấp 1 và cấp 2
+Cấp 1: cho toàn dự án
+Cấp 2: theo chức năng chuyên ngành
+00. CAMPUSPAY - MASTER PROJECT (Thư mục gốc dự án quản lý bởi nhóm trưởng 
+01. Chung - Public & Pitch (Chứa Slide Pitch, Business Summary chung cho gọi vốn)
+02. Ban Kỹ thuật (Chứa mã nguồn, tài liệu API, thông tin cấu hình nhạy cảm)
+03. Ban Thiết kế (Chứa file thiết kế UI/UX, tài sản đồ họa, brand guidelines)
+04. Ban Kinh doanh (Chứa Business Plan chi tiết, danh sách đối tác, hợp đồng)
+05. Tài nguyên chung nội bộ (Chứa template, quy trình chung cho cả 4 ban)
+Phần 1.3
+ Bước 1: Tạo một thư mục tổng 00. CAMPUSPAY, rồi tạo các thư mục con bên trong cho từng ban.
+  Bước 2: Đặt tên có số thứ tự (01, 02,...) để quản lý cho dễ, không bị nhầm.
+ Bước 3: Cấp quyền riêng cho từng người/từng nhóm (ai làm việc nấy dùng).
+ Bước 4: Kiểm tra lại kỹ càng, tuyệt đối không để chế độ công khai “Anyone with the link” cho tài liệu mật.
+Bước 5: Khi có ai nghỉ việc hoặc hết hạn (như nhà đầu tư sau 14 ngày) thì bấm nút thu hồi quyền ngay lập tức.
+Phần 2.4
+Loại tài liệu	Kỹ thuật	Thiết kế	Kinh doanh	Nhà đầu tư
+Code / API	Sửa	Không	Không	Không
+Thiết kế	Xem	Sửa	Xem	Không
+Business Plan	Xem	Không	Sửa	Xem tóm tắt
+Slide Pitch	Xem	Xem	Sửa	Xem (14 ngày)
+
+Phần 2.5
+Bẫy 1 :Cho họ quyền Viewer (Người xem).
+Bật thêm tính năng chặn tải về, in ấn và copy (Disable download/print/copy) để không bị lộ nội dung mật.
+Bẫy 2:Cấp quyền Viewer (Người xem) và VẪN GIỮ tính năng cho phép tải xuống (Viewers can download), vì họ cần bản PDF để mở máy offline. Miễn là họ chỉ là Viewer thì đố mà sửa được file gốc.
+Bẫy 3:Vào Google Drive, tìm thẳng tên/email của người đó ở phần chia sẻ thư mục tổng 00. CAMPUSPAY rồi bấm Remove (Xóa) là xong phim, họ bay màu quyền truy cập ngay lập tức!
+
